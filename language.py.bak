@@ -1,5 +1,4 @@
-from functools import reduce
-# #!/usr/bin/python -O
+#!/usr/bin/python -O
 # -*- coding: utf-8 -*-
 
 # 2014 Stephan Boyer

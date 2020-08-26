@@ -1,4 +1,4 @@
-# #!/usr/bin/python -O
+#!/usr/bin/python -O
 # -*- coding: utf-8 -*-
 
 # 2014 Stephan Boyer
@@ -385,7 +385,7 @@ def main():
 
   while True:
     try:
-      inp = input('\n> ')
+      inp = raw_input('\n> ')
       commands = ['axiom', 'lemma', 'axioms', 'lemmas', 'remove', 'reset']
       tokens = [(token.lower() if token in commands else token)
         for token in lex(inp)]
@@ -406,43 +406,43 @@ def main():
         formula = parse(tokens[1:])
         check_formula(formula)
         axioms.add(formula)
-        print(('Axiom added: %s.' % formula))
+        print('Axiom added: %s.' % formula)
       elif len(tokens) > 0 and tokens[0] == 'lemma':
         formula = parse(tokens[1:])
         check_formula(formula)
         result = proveFormula(axioms | set(lemmas.keys()), formula)
         if result:
           lemmas[formula] = axioms.copy()
-          print(('Lemma proven: %s.' % formula))
+          print('Lemma proven: %s.' % formula)
         else:
-          print(('Lemma unprovable: %s.' % formula))
+          print('Lemma unprovable: %s.' % formula)
       elif len(tokens) > 0 and tokens[0] == 'remove':
         formula = parse(tokens[1:])
         check_formula(formula)
         if formula in axioms:
           axioms.remove(formula)
           bad_lemmas = []
-          for lemma, dependent_axioms in list(lemmas.items()):
+          for lemma, dependent_axioms in lemmas.items():
             if formula in dependent_axioms:
               bad_lemmas.append(lemma)
           for lemma in bad_lemmas:
             del lemmas[lemma]
-          print(('Axiom removed: %s.' % formula))
+          print('Axiom removed: %s.' % formula)
           if len(bad_lemmas) == 1:
             print('This lemma was proven using that ' \
               'axiom and was also removed:')
             for lemma in bad_lemmas:
-              print(('  %s' % lemma))
+              print('  %s' % lemma)
           if len(bad_lemmas) > 1:
             print('These lemmas were proven using that ' \
               'axiom and were also removed:')
             for lemma in bad_lemmas:
-              print(('  %s' % lemma))
+              print('  %s' % lemma)
         elif formula in lemmas:
           del lemmas[formula]
-          print(('Lemma removed: %s.' % formula))
+          print('Lemma removed: %s.' % formula)
         else:
-          print(('Not an axiom: %s.' % formula))
+          print('Not an axiom: %s.' % formula)
       elif len(tokens) > 0 and tokens[0] == 'reset':
         if len(tokens) > 1:
           raise InvalidInputError('Unexpected: %s.' % tokens[1])
@@ -453,11 +453,11 @@ def main():
         check_formula(formula)
         result = proveFormula(axioms | set(lemmas.keys()), formula)
         if result:
-          print(('Formula proven: %s.' % formula))
+          print('Formula proven: %s.' % formula)
         else:
-          print(('Formula unprovable: %s.' % formula))
+          print('Formula unprovable: %s.' % formula)
     except InvalidInputError as e:
-      print((e.message))
+      print(e.message)
     except KeyboardInterrupt:
       pass
     except EOFError:

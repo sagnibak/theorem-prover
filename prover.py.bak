@@ -1,4 +1,4 @@
-# #!/usr/bin/python -O
+#!/usr/bin/python -O
 # -*- coding: utf-8 -*-
 
 # 2014 Stephan Boyer
@@ -33,13 +33,13 @@ def unify(term_a, term_b):
     for i in range(len(term_a.terms)):
       a = term_a.terms[i]
       b = term_b.terms[i]
-      for k, v in list(substitution.items()):
+      for k, v in substitution.items():
         a = a.replace(k, v)
         b = b.replace(k, v)
       sub = unify(a, b)
       if sub == None:
         return None
-      for k, v in list(sub.items()):
+      for k, v in sub.items():
         substitution[k] = v
     return substitution
   return None
@@ -50,13 +50,13 @@ def unify_list(pairs):
   for term_a, term_b in pairs:
     a = term_a
     b = term_b
-    for k, v in list(substitution.items()):
+    for k, v in substitution.items():
       a = a.replace(k, v)
       b = b.replace(k, v)
     sub = unify(a, b)
     if sub == None:
       return None
-    for k, v in list(sub.items()):
+    for k, v in sub.items():
       substitution[k] = v
   return substitution
 
@@ -157,7 +157,7 @@ def proveSequent(sequent):
       old_sequent = frontier.pop(0)
     if old_sequent is None:
       break
-    print(('%s. %s' % (old_sequent.depth, old_sequent)))
+    print('%s. %s' % (old_sequent.depth, old_sequent))
 
     # check if this sequent is axiomatically true without unification
     if len(set(old_sequent.left.keys()) & set(old_sequent.right.keys())) > 0:
@@ -193,8 +193,8 @@ def proveSequent(sequent):
           if pos < 0:
             break
         if substitution is not None:
-          for k, v in list(substitution.items()):
-            print(('  %s = %s' % (k, v)))
+          for k, v in substitution.items():
+            print('  %s = %s' % (k, v))
           proven |= old_sequent.siblings
           frontier = [sequent for sequent in frontier
             if sequent not in old_sequent.siblings]
@@ -207,14 +207,14 @@ def proveSequent(sequent):
       # determine which formula to expand
       left_formula = None
       left_depth = None
-      for formula, depth in list(old_sequent.left.items()):
+      for formula, depth in old_sequent.left.items():
         if left_depth is None or left_depth > depth:
           if not isinstance(formula, Predicate):
             left_formula = formula
             left_depth = depth
       right_formula = None
       right_depth = None
-      for formula, depth in list(old_sequent.right.items()):
+      for formula, depth in old_sequent.right.items():
         if right_depth is None or right_depth > depth:
           if not isinstance(formula, Predicate):
             right_formula = formula
